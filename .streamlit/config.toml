@@ -1,0 +1,53 @@
+# Thème dashboard sombre, inspiré Finary, avec une touche plus ronde/ludique
+# (moins "corpo" qu'un thème finance classique : coins arrondis généreux,
+# accent violet vif plutôt qu'un bleu austère).
+
+[theme]
+base = "dark"
+primaryColor = "#635BFF"             # violet vif (boutons, sliders, éléments actifs)
+backgroundColor = "#0B1120"          # fond quasi noir/bleu nuit
+secondaryBackgroundColor = "#151E32" # cards, widgets
+textColor = "#EAF0FB"
+linkColor = "#8B7CFF"
+borderColor = "#28334A"
+codeBackgroundColor = "#151E32"
+codeTextColor = "#CBD5E1"
+showWidgetBorder = true
+showSidebarBorder = true
+baseRadius = "14px"                  # coins arrondis généreux = plus sympa qu'un dashboard finance classique
+buttonRadius = "14px"
+
+font = "'Inter':https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+headingFont = "'Inter':https://fonts.googleapis.com/css2?family=Inter:wght@600;700&display=swap"
+codeFont = "'JetBrains Mono':https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap"
+baseFontSize = 15
+baseFontWeight = 400
+headingFontSizes = ["30px", "24px", "20px", "17px", "15px", "13px"]
+headingFontWeights = [700, 600, 600, 600, 500, 500]
+linkUnderline = false
+
+# Couleurs sémantiques : vert pour les gains, rouge pour l'impôt/pertes
+greenColor = "#34D399"
+redColor = "#F87171"
+yellowColor = "#FBBF24"
+orangeColor = "#FB923C"
+blueColor = "#60A5FA"
+violetColor = "#A78BFA"
+grayColor = "#94A3B8"
+
+chartCategoricalColors = ["#635BFF", "#34D399", "#60A5FA", "#FBBF24", "#F87171", "#A78BFA", "#38BDF8", "#FB923C"]
+chartSequentialColors = [
+    "#0C1A3E", "#132B5E", "#1B3E85", "#2554AD", "#3670D6",
+    "#5C93EF", "#8AB6F5", "#B7D4FA", "#DCE9FC", "#F0F6FE",
+]
+
+dataframeBorderColor = "#28334A"
+dataframeHeaderBackgroundColor = "#151E32"
+
+[theme.sidebar]
+backgroundColor = "#0B1120"
+secondaryBackgroundColor = "#151E32"
+codeBackgroundColor = "#151E32"
+textColor = "#EAF0FB"
+borderColor = "#28334A"
+primaryColor = "#635BFF"
