@@ -8,10 +8,13 @@ from PIL import Image, ImageDraw, ImageFont
 
 st.set_page_config(page_title="Lucide", page_icon="static/logo-icon.svg", layout="wide")
 
-# Dégradé violet (couleur du logo) vers cyan clair, utilisé sur "Lucide" partout où le nom apparaît en grand.
+# Dégradé violet (couleur du logo) vers cyan, utilisé sur "Lucide" partout où le nom apparaît en grand.
+# Cyan saturé (pas pastel) pour que la transition soit visible sur un mot aussi court, et affichage
+# en inline-block pour que le dégradé soit calé sur la largeur réelle du texte (pas celle du conteneur).
 LUCIDE_GRADIENT_STYLE = (
-    "background: linear-gradient(90deg, #635BFF, #67E8F9); "
-    "-webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700;"
+    "display: inline-block; background: linear-gradient(90deg, #635BFF, #22D3EE); "
+    "-webkit-background-clip: text; background-clip: text; "
+    "-webkit-text-fill-color: transparent; color: transparent; font-weight: 700;"
 )
 
 if "a_demarre" not in st.session_state:
