@@ -8,6 +8,22 @@ from PIL import Image, ImageDraw, ImageFont
 
 st.set_page_config(page_title="Lucide", page_icon="static/logo-icon.svg", layout="wide")
 
+if "a_demarre" not in st.session_state:
+    st.session_state.a_demarre = False
+
+if not st.session_state.a_demarre:
+    st.container(height=120)
+    with st.container(horizontal_alignment="center"):
+        st.title("On t'a appris à travailler pour gagner de l'argent. Personne ne t'a appris quoi en faire.")
+        st.caption("*Découvre-le maintenant, en 5 minutes.*")
+        if st.button("Démarrer", type="primary"):
+            st.session_state.a_demarre = True
+            st.session_state.quiz_ouvert = False
+            st.session_state.cours_ouvert = True
+            st.session_state.cours_etape = 0
+            st.rerun()
+    st.stop()
+
 st.logo("static/logo.svg", size="large", icon_image="static/logo-icon.svg")
 
 
