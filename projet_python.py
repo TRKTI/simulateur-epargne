@@ -8,18 +8,27 @@ from PIL import Image, ImageDraw, ImageFont
 
 st.set_page_config(page_title="Lucide", page_icon="static/logo-icon.svg", layout="wide")
 
+# Dégradé violet (couleur du logo) vers cyan clair, utilisé sur "Lucide" partout où le nom apparaît en grand.
+LUCIDE_GRADIENT_STYLE = (
+    "background: linear-gradient(90deg, #635BFF, #67E8F9); "
+    "-webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700;"
+)
+
 if "a_demarre" not in st.session_state:
     st.session_state.a_demarre = False
 
 if not st.session_state.a_demarre:
-    st.container(height=48)
+    st.container(height=48, border=False)
     with st.container(horizontal_alignment="center"):
         with st.container(horizontal=True, vertical_alignment="center", gap="small", width="content"):
             st.image("static/logo-icon.svg", width=24)
-            st.markdown("**Lucide**")
-        st.caption("vois clair dans ton épargne")
+            st.markdown(
+                f'<span style="{LUCIDE_GRADIENT_STYLE}">Lucide</span> '
+                '<span style="color: #94A3B8; font-size: 0.85em;">- vois clair dans ton épargne</span>',
+                unsafe_allow_html=True,
+            )
 
-    st.container(height=64)
+    st.container(height=64, border=False)
     with st.container(horizontal_alignment="center"):
         st.title("On t'a appris à travailler pour gagner de l'argent. Personne ne t'a appris quoi en faire.")
         st.caption("*Découvre-le maintenant, en 5 minutes.*")
@@ -369,7 +378,10 @@ with st.sidebar:
 
 with st.container(horizontal=True, vertical_alignment="center"):
     st.image("static/logo-icon.svg", width=48)
-    st.title("Lucide")
+    st.markdown(
+        f'<h1 style="{LUCIDE_GRADIENT_STYLE} font-size: 2.5rem; margin: 0; line-height: 1;">Lucide</h1>',
+        unsafe_allow_html=True,
+    )
 st.caption("Le simulateur d'épargne qui n'a rien à cacher. Vois clair sur ton capital, tes profils de risque et l'impact réel de la fiscalité française.")
 
 with st.popover("Glossaire", icon=":material/menu_book:"):
