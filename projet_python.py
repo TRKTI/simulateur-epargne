@@ -12,7 +12,14 @@ if "a_demarre" not in st.session_state:
     st.session_state.a_demarre = False
 
 if not st.session_state.a_demarre:
-    st.container(height=120)
+    st.container(height=48)
+    with st.container(horizontal_alignment="center"):
+        with st.container(horizontal=True, vertical_alignment="center", gap="small", width="content"):
+            st.image("static/logo-icon.svg", width=24)
+            st.markdown("**Lucide**")
+        st.caption("vois clair dans ton épargne")
+
+    st.container(height=64)
     with st.container(horizontal_alignment="center"):
         st.title("On t'a appris à travailler pour gagner de l'argent. Personne ne t'a appris quoi en faire.")
         st.caption("*Découvre-le maintenant, en 5 minutes.*")
