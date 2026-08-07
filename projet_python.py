@@ -1,4 +1,5 @@
 import io
+import time
 import unicodedata
 
 import streamlit as st
@@ -8,39 +9,98 @@ from PIL import Image, ImageDraw, ImageFont
 
 st.set_page_config(page_title="Lucide", page_icon="static/logo-icon.svg", layout="wide")
 
+VIOLET = "#635BFF"
+CYAN = "#22D3EE"
+
 # Dégradé violet (couleur du logo) vers cyan, utilisé sur "Lucide" partout où le nom apparaît en grand.
 # Cyan saturé (pas pastel) pour que la transition soit visible sur un mot aussi court, et affichage
 # en inline-block pour que le dégradé soit calé sur la largeur réelle du texte (pas celle du conteneur).
 LUCIDE_GRADIENT_STYLE = (
-    "display: inline-block; background: linear-gradient(90deg, #635BFF, #22D3EE); "
+    f"display: inline-block; background: linear-gradient(90deg, {VIOLET}, {CYAN}); "
     "-webkit-background-clip: text; background-clip: text; "
     "-webkit-text-fill-color: transparent; color: transparent; font-weight: 700;"
 )
+
+# Écran de transition affiché brièvement entre le hero et le quiz/cours : chiffres flottants flous,
+# purement CSS (keyframes), pas de JS. Les animation-delay négatifs évitent que tout parte du même
+# point de départ, pour un effet déjà "en mouvement" dès l'affichage.
+TRANSITION_HTML = f"""
+<style>
+@keyframes lucide-flotte {{
+    0% {{ transform: translateY(18px); opacity: 0; filter: blur(4px); }}
+    50% {{ opacity: 0.55; filter: blur(1px); }}
+    100% {{ transform: translateY(-18px); opacity: 0; filter: blur(4px); }}
+}}
+.lucide-transition {{
+    position: relative;
+    height: 60vh;
+    min-height: 380px;
+    background: #0B1120;
+    overflow: hidden;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}}
+.lucide-transition .chiffre {{
+    position: absolute;
+    font-weight: 700;
+    animation-name: lucide-flotte;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}}
+.lucide-transition .message {{
+    position: relative;
+    z-index: 2;
+    color: #EAF0FB;
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+}}
+</style>
+<div class="lucide-transition">
+    <span class="chiffre" style="top:15%; left:12%; font-size:2.2rem; color:{VIOLET}; animation-duration:3.2s; animation-delay:-0.4s;">12%</span>
+    <span class="chiffre" style="top:65%; left:18%; font-size:1.6rem; color:{CYAN}; animation-duration:2.6s; animation-delay:-1.2s;">1 000&euro;</span>
+    <span class="chiffre" style="top:25%; left:75%; font-size:2rem; color:{CYAN}; animation-duration:3.6s; animation-delay:-0.8s;">7,5%</span>
+    <span class="chiffre" style="top:70%; left:70%; font-size:1.8rem; color:{VIOLET}; animation-duration:2.9s; animation-delay:-2s;">3%</span>
+    <span class="chiffre" style="top:45%; left:8%; font-size:1.4rem; color:{VIOLET}; animation-duration:3.4s; animation-delay:-1.6s;">1,7%</span>
+    <span class="chiffre" style="top:10%; left:45%; font-size:1.5rem; color:{CYAN}; animation-duration:2.4s; animation-delay:-0.6s;">20 ans</span>
+    <span class="chiffre" style="top:80%; left:42%; font-size:1.7rem; color:{VIOLET}; animation-duration:3.1s; animation-delay:-1.9s;">10%</span>
+    <span class="chiffre" style="top:38%; left:85%; font-size:1.3rem; color:{CYAN}; animation-duration:2.8s; animation-delay:-0.3s;">+2 061&euro;</span>
+    <p class="message">Un instant...</p>
+</div>
+"""
 
 if "a_demarre" not in st.session_state:
     st.session_state.a_demarre = False
 
 if not st.session_state.a_demarre:
-    st.container(height=48, border=False)
-    with st.container(horizontal_alignment="center"):
-        with st.container(horizontal=True, vertical_alignment="center", gap="small", width="content"):
-            st.image("static/logo-icon.svg", width=24)
-            st.markdown(
-                f'<span style="{LUCIDE_GRADIENT_STYLE}">Lucide</span> '
-                '<span style="color: #94A3B8; font-size: 0.85em;">- vois clair dans ton épargne</span>',
-                unsafe_allow_html=True,
-            )
+    hero = st.empty()
+    with hero.container():
+        st.container(height=48, border=False)
+        with st.container(horizontal_alignment="center"):
+            with st.container(horizontal=True, vertical_alignment="center", gap="small", width="content"):
+                st.image("static/logo-icon.svg", width=24)
+                st.markdown(
+                    f'<span style="{LUCIDE_GRADIENT_STYLE}">Lucide</span> '
+                    '<span style="color: #94A3B8; font-size: 0.85em;">- vois clair dans ton épargne</span>',
+                    unsafe_allow_html=True,
+                )
 
-    st.container(height=64, border=False)
-    with st.container(horizontal_alignment="center"):
-        st.title("On t'a appris à travailler pour gagner de l'argent. Personne ne t'a appris quoi en faire.")
-        st.caption("*Découvre-le maintenant, en 5 minutes.*")
-        if st.button("Démarrer", type="primary"):
-            st.session_state.a_demarre = True
-            st.session_state.quiz_ouvert = False
-            st.session_state.cours_ouvert = True
-            st.session_state.cours_etape = 0
-            st.rerun()
+        st.container(height=64, border=False)
+        with st.container(horizontal_alignment="center"):
+            st.title("On t'a appris à travailler pour gagner de l'argent. Personne ne t'a appris quoi en faire.")
+            st.caption("*Découvre-le maintenant, en 5 minutes.*")
+            demarrer = st.button("Démarrer", type="primary")
+
+    if demarrer:
+        hero.markdown(TRANSITION_HTML, unsafe_allow_html=True)
+        time.sleep(1.8)
+
+        st.session_state.a_demarre = True
+        st.session_state.quiz_ouvert = False
+        st.session_state.cours_ouvert = True
+        st.session_state.cours_etape = 0
+        st.rerun()
     st.stop()
 
 st.logo("static/logo.svg", size="large", icon_image="static/logo-icon.svg")
