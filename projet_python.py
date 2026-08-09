@@ -379,6 +379,7 @@ Une enveloppe, c'est le contenant de ton épargne (Livret, PEA, Assurance-vie...
             if st.button("Voir mon simulateur", type="primary", key=f"cours_suivant_{etape}"):
                 st.session_state.versement_input = float(epargne)
                 st.session_state.cours_etape = 0
+                st.session_state.quiz_ouvert = True
                 st.switch_page(page_information_profil)
 
 
