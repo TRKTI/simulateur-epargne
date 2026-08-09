@@ -138,7 +138,7 @@ def calculer_impot(enveloppe, duree, gain):
     if enveloppe == "Livret":
         return 0
     elif enveloppe == "PEA":
-        return gain * 0.30 if duree < 5 else gain * 0.172
+        return gain * 0.314 if duree < 5 else gain * 0.186
     elif enveloppe == "Assurance-vie":
         return gain * 0.30 if duree < 8 else gain * 0.247
 
@@ -350,7 +350,7 @@ Avant de choisir où placer ton argent, une question compte plus que le taux : �
     elif etape == 4:
         st.subheader("La fiscalité")
         st.markdown("""
-L'État prélève une partie de tes gains — jamais sur ce que tu as versé. En France, la référence est la **flat tax** (30%), mais elle varie selon l'enveloppe et la durée de détention.
+L'État prélève une partie de tes gains — jamais sur ce que tu as versé. En France, la référence est la **flat tax**, dont le taux varie selon l'enveloppe et la durée de détention.
 """)
         navigation_cours(etape)
 
@@ -477,7 +477,7 @@ Le PER est une enveloppe dédiée à la préparation de la retraite : l'épargne
 
 Son principal atout : les versements volontaires sont déductibles du revenu imposable, dans la limite d'un plafond annuel personnalisé (visible sur l'avis d'imposition, à la rubrique "Plafond épargne retraite"). Pour 2025, ce plafond correspond au plus élevé entre 10% des revenus professionnels nets de l'année précédente et un forfait, avec un maximum de 35 194€. Depuis 2026, les plafonds non utilisés des 5 années précédentes peuvent être mobilisés en plus du plafond de l'année en cours.
 
-À la retraite, l'épargne issue des versements volontaires peut être récupérée au choix en capital, en rente viagère, ou un mélange des deux — seuls les droits issus de versements obligatoires (employeur) doivent obligatoirement sortir en rente. La fiscalité à la sortie dépend de ce choix et de la déduction (ou non) des versements à l'entrée : schématiquement, la part correspondant aux gains est taxée au PFU (30%), et la part correspondant aux versements déduits à l'entrée est réintégrée au revenu imposable.
+À la retraite, l'épargne issue des versements volontaires peut être récupérée au choix en capital, en rente viagère, ou un mélange des deux — seuls les droits issus de versements obligatoires (employeur) doivent obligatoirement sortir en rente. La fiscalité à la sortie dépend de ce choix et de la déduction (ou non) des versements à l'entrée : schématiquement, la part correspondant aux gains est taxée au PFU (31,4%, le PER n'étant pas exempté de la hausse des prélèvements sociaux de 2026), et la part correspondant aux versements déduits à l'entrée est réintégrée au revenu imposable.
 
 Le PER n'est intéressant fiscalement que si la déduction à l'entrée procure un gain d'impôt réel (tranche marginale d'imposition non nulle) — sans quoi son principal avantage disparaît, tout en gardant la contrainte de blocage jusqu'à la retraite.
 """)
@@ -548,8 +548,8 @@ def vue_information_profil():
         - **PEA** (Plan d'Épargne en Actions) : enveloppe pour investir en actions/ETF, fiscalité avantageuse après 5 ans.
         - **Livret A / LDDS / LEP** : livrets d'épargne réglementés par l'État, taux fixé, zéro fiscalité, mais plafonnés.
         - **Assurance-vie** : enveloppe flexible, fiscalité qui s'allège avec le temps (abattement après 8 ans).
-        - **Flat tax** : prélèvement forfaitaire unique de 30% sur les gains (12,8% impôt + 17,2% prélèvements sociaux).
-        - **Prélèvements sociaux** : part de la flat tax (17,2%) qui finance la sécurité sociale, due même quand l'impôt est exonéré.
+        - **Flat tax** : prélèvement forfaitaire unique de 31,4% sur les gains pour la plupart des placements (12,8% impôt + 18,6% prélèvements sociaux) — 30% pour l'assurance-vie, exemptée de la hausse 2026.
+        - **Prélèvements sociaux** : 18,6% depuis 2026 pour la plupart des placements (17,2% pour l'assurance-vie), dus même quand l'impôt est exonéré.
         - **Abattement** : montant de gains exonéré d'impôt chaque année (ex : 4 600€ pour une assurance-vie après 8 ans).
         - **Plus-value / gain** : différence entre ce que vaut ton épargne aujourd'hui et ce que tu as versé.
         - **Capital net** : ce qu'il te reste après impôt — l'argent réellement disponible.
@@ -635,8 +635,8 @@ def vue_information_profil():
             st.write("Les livrets réglementés (Livret A, LDDS, LEP) sont totalement exonérés d'impôt et de prélèvements sociaux, quelle que soit la durée de détention.")
         elif enveloppe == "PEA":
             st.write("""
-            - **Avant 5 ans** : les gains sont soumis à la flat tax de 30% (12,8% impôt + 17,2% prélèvements sociaux).
-            - **Après 5 ans** : exonération d'impôt sur le revenu, il reste seulement les 17,2% de prélèvements sociaux.
+            - **Avant 5 ans** : les gains sont soumis à la flat tax de 31,4% (12,8% impôt + 18,6% prélèvements sociaux).
+            - **Après 5 ans** : exonération d'impôt sur le revenu, il reste seulement les 18,6% de prélèvements sociaux.
             """)
         elif enveloppe == "Assurance-vie":
             st.write("""
@@ -661,7 +661,7 @@ def vue_information_profil():
         elif enveloppe == "PEA":
             st.markdown("""
             **Avantages**
-            - Fiscalité très avantageuse après 5 ans (17,2% au lieu de 30%)
+            - Fiscalité très avantageuse après 5 ans (18,6% au lieu de 31,4%)
             - Accès à un large choix d'ETF et d'actions
             - Plafond élevé : 150 000€ de versements
 
