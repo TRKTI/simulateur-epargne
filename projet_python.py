@@ -252,8 +252,8 @@ def navigation_cours(etape, texte_suivant="Suivant"):
             st.rerun()
 
 
-def vue_cours():
-    st.subheader("Cours")
+def vue_parcours_intro():
+    st.subheader("Parcours d'intro")
     etape = st.session_state.cours_etape
     st.progress((etape + 1) / NB_ETAPES_COURS, text=f"Étape {etape + 1}/{NB_ETAPES_COURS}")
 
@@ -381,6 +381,108 @@ Une enveloppe, c'est le contenant de ton épargne (Livret, PEA, Assurance-vie...
                 st.session_state.cours_etape = 0
                 st.session_state.quiz_ouvert = True
                 st.switch_page(page_information_profil)
+
+
+def vue_cours():
+    st.subheader("Cours")
+    st.caption("Le parcours d'intro (5 minutes) te donne les bases. Cette page va plus loin, à ton rythme.")
+
+    onglet_essentiels, onglet_avance = st.tabs(["Les essentiels", "Pour aller plus loin"])
+
+    with onglet_essentiels:
+        with st.expander("Épargner"):
+            st.markdown("""
+Épargner, c'est mettre de côté une partie de ce que tu gagnes maintenant pour te constituer une réserve utilisable plus tard — que ce soit pour un imprévu, un projet ou ta retraite. Ce n'est pas un renoncement : c'est reporter une partie de ta consommation dans le temps, en échange d'une sécurité ou d'un objectif futur.
+
+Ce qui rend l'épargne efficace, c'est le temps. Un euro épargné à 20 ans a beaucoup plus de temps pour produire des intérêts qu'un euro épargné à 40 ans — pas parce qu'il "vaut plus", mais parce qu'il traverse davantage de cycles de rendement (voir les intérêts composés ci-dessous).
+
+Avant de penser rendement, la question à se poser est : à quoi sert cette épargne, et dans combien de temps en ai-je besoin ? Une épargne de précaution (imprévu, perte de revenu) n'a pas les mêmes contraintes qu'une épargne pour un projet à 5 ans ou une épargne retraite à 30 ans — d'où l'intérêt de séparer ses objectifs plutôt que de tout mettre au même endroit.
+""")
+
+        with st.expander("Les intérêts composés"):
+            st.markdown("""
+Le taux d'intérêt, c'est le pourcentage que ton capital te rapporte sur une période donnée, généralement un an. Un taux de 3% sur 1 000€ rapporte 30€ la première année.
+
+La différence entre intérêts simples et intérêts composés se joue à partir de la deuxième année. Avec des intérêts simples, tu gagnes toujours 30€/an sur les mêmes 1 000€. Avec des intérêts composés — le mode de fonctionnement de la quasi-totalité des placements d'épargne — les intérêts de l'année précédente s'ajoutent au capital et produisent eux-mêmes des intérêts l'année suivante. Ton capital grossit, donc les intérêts qu'il génère grossissent aussi.
+
+Un repère mental utile : la "règle de 72". En divisant 72 par un taux annuel, on obtient une estimation du nombre d'années nécessaires pour doubler un capital (hors versements). À 3%, il faut environ 24 ans (72÷3) ; à 7%, environ 10 ans (72÷7). C'est une approximation, pas un calcul exact, mais elle donne une intuition rapide de l'effet du temps.
+
+Concrètement, l'écart entre commencer à 25 ans et commencer à 35 ans n'est pas juste "10 ans de moins" : c'est 10 ans de moins de cycles de composition, ce qui peut représenter une part significative du capital final sur un horizon de 30-40 ans.
+""")
+
+        with st.expander("L'inflation"):
+            st.markdown("""
+L'inflation, c'est la hausse générale et durable des prix dans une économie. Elle est mesurée en France par l'INSEE via l'indice des prix à la consommation. Concrètement, si l'inflation est de 1,5% sur un an, il faut environ 1,5% de plus qu'il y a un an pour acheter le même panier de biens et services.
+
+Pour ton épargne, l'inflation agit comme une érosion silencieuse : un capital qui ne rapporte rien (ou moins que l'inflation) perd du pouvoir d'achat chaque année, même si le chiffre affiché sur ton relevé ne bouge pas. C'est la différence entre rendement nominal (le taux affiché) et rendement réel (ce qu'il te reste une fois l'inflation déduite) — approximativement : rendement réel ≈ rendement nominal − inflation.
+
+C'est pourquoi laisser une grosse somme dormir sur un compte courant (0% de rendement) est le scénario le plus défavorable à long terme : c'est la seule situation où il n'y a aucune compensation, même partielle, à l'érosion monétaire.
+""")
+
+        with st.expander("La fiscalité"):
+            st.markdown("""
+Quand ton épargne produit des gains (intérêts, dividendes, plus-values), l'État peut en prélever une partie — jamais sur le capital que tu as versé, uniquement sur ce que ce capital a rapporté.
+
+Le régime de référence pour les revenus du capital en France est le prélèvement forfaitaire unique (PFU), aussi appelé flat tax : 12,8% d'impôt sur le revenu + des prélèvements sociaux. Depuis le 1er janvier 2026, le taux des prélèvements sociaux est passé de 17,2% à 18,6% (hausse de la CSG), portant la flat tax totale à 31,4% pour la plupart des placements (comptes-titres, PEA, PER).
+
+L'assurance-vie fait exception : elle est explicitement exclue de cette hausse et reste taxée à l'ancien taux de 17,2% de prélèvements sociaux (flat tax à 30% avant 8 ans). Les livrets réglementés (Livret A, LDDS, LEP) restent quant à eux totalement exonérés d'impôt et de prélèvements sociaux, quel que soit leur taux.
+
+La fiscalité varie donc fortement selon l'enveloppe choisie et sa durée de détention — c'est tout l'objet de la section "Pour aller plus loin" ci-dessous.
+""")
+
+    with onglet_avance:
+        with st.expander("PEA vs compte-titres ordinaire (CTO)"):
+            st.markdown("""
+Le compte-titres ordinaire (CTO) est le compte le plus simple et le plus souple : aucun plafond de versement, accès à des titres du monde entier, mais aucun avantage fiscal particulier. Chaque gain (vente, dividende) est imposé au PFU de 31,4% (ou sur option au barème progressif de l'impôt sur le revenu), dès qu'il est réalisé.
+
+Le PEA (Plan d'Épargne en Actions) est plus contraint mais fiscalement avantageux : il est réservé aux actions et fonds/ETF éligibles (principalement des titres européens), plafonné à 150 000€ de versements (225 000€ en cumulant avec un PEA-PME), et réservé aux résidents fiscaux français. En contrepartie, après 5 ans de détention, les gains retirés sont exonérés d'impôt sur le revenu — il ne reste que les prélèvements sociaux (18,6% depuis 2026).
+
+Avant 5 ans, un retrait sur un PEA entraîne en principe sa clôture et une taxation au régime du CTO (31,4%) — sauf cas particuliers prévus par la loi. C'est pourquoi le PEA est pensé comme un placement de long terme : sa fiscalité avantageuse ne se déclenche qu'après le cap des 5 ans.
+
+En résumé : le CTO offre une liberté totale sans avantage fiscal, le PEA offre un avantage fiscal réel en échange de contraintes (plafond, titres éligibles, horizon 5 ans+).
+""")
+
+        with st.expander("Comment fonctionne un ETF"):
+            st.markdown("""
+Un ETF (Exchange Traded Fund), aussi appelé tracker, est un fonds d'investissement coté en bourse dont l'objectif est de répliquer le plus fidèlement possible la performance d'un indice — par exemple le CAC 40 ou le MSCI World, qui regroupe environ 1 500 grandes entreprises de 23 pays développés.
+
+Contrairement à un fonds classique (acheté/vendu une fois par jour à un cours calculé en fin de journée), un ETF se négocie en continu sur un marché boursier, comme une action, à un prix qui varie tout au long de la séance.
+
+Son principal intérêt pédagogique : en une seule ligne, un ETF permet de posséder une fraction de centaines ou milliers d'entreprises différentes, ce qui dilue mécaniquement le risque lié à une seule société ou un seul secteur (voir la note "Dans la pratique" du PEA dans la page Information et profil). Ses frais de gestion sont généralement plus faibles que ceux d'un fonds géré activement, car il n'y a pas d'équipe de gestion cherchant à "battre" le marché — juste à le suivre.
+
+Un ETF reste un produit d'investissement : sa valeur suit l'indice, à la hausse comme à la baisse. Le capital n'est jamais garanti.
+""")
+
+        with st.expander("Plus-value latente vs plus-value réalisée"):
+            st.markdown("""
+Une plus-value latente, c'est un gain "sur le papier" : la valeur de ton placement a augmenté, mais tant que tu ne l'as pas vendu, ce gain n'est ni encaissé ni imposé. Il peut aussi bien s'accroître que disparaître (voire devenir une perte) selon l'évolution des marchés.
+
+Une plus-value réalisée, c'est ce même gain une fois que tu as effectivement vendu le placement : à ce moment-là, le gain est "cristallisé" et devient imposable (selon les règles de l'enveloppe concernée).
+
+Implication concrète : tant que tu ne vends pas, il n'y a rien à déclarer ni à payer sur la simple hausse de valeur de ton portefeuille — le fait générateur de l'impôt, c'est la vente (ou un retrait, selon l'enveloppe), pas la détention.
+""")
+
+        with st.expander("Les prélèvements sociaux"):
+            st.markdown("""
+Les prélèvements sociaux regroupent plusieurs contributions (CSG, CRDS, prélèvement de solidarité) qui financent la protection sociale française — assurance maladie, retraite, dépendance. Ils s'appliquent en plus de l'impôt sur le revenu sur la plupart des revenus du capital.
+
+Depuis le 1er janvier 2026, leur taux global est de 18,6% (contre 17,2% auparavant), suite à une hausse de la CSG de 9,2% à 10,6%. Ce taux s'applique aux gains d'un compte-titres, d'un PEA (après 5 ans), d'un PER, ou aux dividendes d'actions.
+
+Deux exceptions notables : les livrets réglementés (Livret A, LDDS, LEP) restent totalement exonérés de prélèvements sociaux, et l'assurance-vie est explicitement maintenue à l'ancien taux de 17,2% — elle n'est pas concernée par cette hausse.
+""")
+
+        with st.expander("Le PER (Plan d'Épargne Retraite)"):
+            st.markdown("""
+Le PER est une enveloppe dédiée à la préparation de la retraite : l'épargne y est bloquée jusqu'au départ en retraite, sauf cas de déblocage anticipé prévus par la loi (achat de la résidence principale, invalidité, décès du conjoint, surendettement...).
+
+Son principal atout : les versements volontaires sont déductibles du revenu imposable, dans la limite d'un plafond annuel personnalisé (visible sur l'avis d'imposition, à la rubrique "Plafond épargne retraite"). Pour 2025, ce plafond correspond au plus élevé entre 10% des revenus professionnels nets de l'année précédente et un forfait, avec un maximum de 35 194€. Depuis 2026, les plafonds non utilisés des 5 années précédentes peuvent être mobilisés en plus du plafond de l'année en cours.
+
+À la retraite, l'épargne issue des versements volontaires peut être récupérée au choix en capital, en rente viagère, ou un mélange des deux — seuls les droits issus de versements obligatoires (employeur) doivent obligatoirement sortir en rente. La fiscalité à la sortie dépend de ce choix et de la déduction (ou non) des versements à l'entrée : schématiquement, la part correspondant aux gains est taxée au PFU (30%), et la part correspondant aux versements déduits à l'entrée est réintégrée au revenu imposable.
+
+Le PER n'est intéressant fiscalement que si la déduction à l'entrée procure un gain d'impôt réel (tranche marginale d'imposition non nulle) — sans quoi son principal avantage disparaît, tout en gardant la contrainte de blocage jusqu'à la retraite.
+""")
+
+    st.caption("Sources : AMF, service-public.fr, economie.gouv.fr, lafinancepourtous.com. Contenu à visée pédagogique — chiffres à jour au moment de la rédaction, susceptibles d'évoluer. Pas un conseil personnalisé.")
 
 
 def vue_information_profil():
@@ -613,10 +715,11 @@ def vue_comment_debuter():
 page_information_profil = st.Page(vue_information_profil, title="Information et profil", icon=":material/person:", default=True)
 page_cours = st.Page(vue_cours, title="Cours", icon=":material/school:")
 page_comment_debuter = st.Page(vue_comment_debuter, title="Comment débuter", icon=":material/explore:")
+page_parcours_intro = st.Page(vue_parcours_intro, title="Parcours d'intro", visibility="hidden")
 
-pages = st.navigation([page_information_profil, page_cours, page_comment_debuter])
+pages = st.navigation([page_information_profil, page_cours, page_comment_debuter, page_parcours_intro])
 
 if st.session_state.pop("aller_direct_au_cours", False):
-    st.switch_page(page_cours)
+    st.switch_page(page_parcours_intro)
 
 pages.run()
