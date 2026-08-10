@@ -475,7 +475,7 @@ Deux exceptions notables : les livrets réglementés (Livret A, LDDS, LEP) reste
             st.markdown("""
 Le PER est une enveloppe dédiée à la préparation de la retraite : l'épargne y est bloquée jusqu'au départ en retraite, sauf cas de déblocage anticipé prévus par la loi (achat de la résidence principale, invalidité, décès du conjoint, surendettement...).
 
-Son principal atout : les versements volontaires sont déductibles du revenu imposable, dans la limite d'un plafond annuel personnalisé (visible sur l'avis d'imposition, à la rubrique "Plafond épargne retraite"). Pour 2025, ce plafond correspond au plus élevé entre 10% des revenus professionnels nets de l'année précédente et un forfait, avec un maximum de 35 194€. Depuis 2026, les plafonds non utilisés des 5 années précédentes peuvent être mobilisés en plus du plafond de l'année en cours.
+Son principal atout : les versements volontaires sont déductibles du revenu imposable, dans la limite d'un plafond annuel personnalisé (visible sur l'avis d'imposition, à la rubrique "Plafond épargne retraite"). Pour un salarié en 2026, ce plafond correspond à 10% des revenus professionnels nets de l'année précédente, dans la limite de 8 fois le plafond annuel de la Sécurité sociale (PASS) — soit une déduction plafonnée à 37 680€ (plancher forfaitaire de 4 710€ même avec de faibles revenus). Les indépendants ont un mode de calcul et un plafond différents, plus élevés. Depuis 2026, les plafonds non utilisés peuvent être reportés sur les 5 années précédentes (contre 3 ans auparavant).
 
 À la retraite, l'épargne issue des versements volontaires peut être récupérée au choix en capital, en rente viagère, ou un mélange des deux — seuls les droits issus de versements obligatoires (employeur) doivent obligatoirement sortir en rente. La fiscalité à la sortie dépend de ce choix et de la déduction (ou non) des versements à l'entrée : schématiquement, la part correspondant aux gains est taxée au PFU (31,4%, le PER n'étant pas exempté de la hausse des prélèvements sociaux de 2026), et la part correspondant aux versements déduits à l'entrée est réintégrée au revenu imposable.
 
@@ -712,12 +712,97 @@ def vue_comment_debuter():
     st.caption("Ces catégories sont indicatives — aucun établissement n'est recommandé ici personnellement, à toi de comparer selon tes propres critères. (Indicatif, pas un conseil personnalisé.)")
 
 
+def vue_enveloppes_fiscales():
+    st.subheader("Enveloppes fiscales")
+    st.caption("Une fiche par enveloppe : ce que c'est, ce qu'on peut y mettre, ses avantages et ses inconvénients. Contenu factuel, pas une recommandation.")
+
+    with st.expander("Livret (Livret A / LDDS / LEP)", icon=":material/savings:"):
+        st.markdown("""
+**Description** — Un livret réglementé est un compte d'épargne dont les règles (taux, plafond, fiscalité) sont fixées par l'État, pas par la banque. L'argent reste disponible à tout moment, sans délai ni pénalité. Le taux est révisé deux fois par an (1er février et 1er août) selon une formule liée à l'inflation et aux taux interbancaires.
+
+**Composition** — Aucune : ce n'est pas un compte-titres, tu ne choisis pas ce qu'il contient. C'est un compte d'épargne à taux fixe, point.
+""")
+        st.markdown("""
+        **Avantages**
+        - Disponible à tout moment, sans délai ni pénalité
+        - Zéro risque de perte en capital
+        - Totalement exonéré d'impôt et de prélèvements sociaux
+
+        **Inconvénients**
+        - Plafond de dépôt : 22 950€ (Livret A), 12 000€ (LDDS), 10 000€ (LEP)
+        - Rendement faible, souvent proche ou sous l'inflation
+        - Pas d'effet de levier sur le long terme
+        """)
+        st.markdown("**Dans la pratique** — le Livret A/LDDS sert avant tout de matelas de sécurité immédiatement disponible, pas de moteur de performance. Au-delà de l'épargne de précaution, la plupart des ressources pédagogiques recommandent de chercher un rendement ailleurs pour ne pas perdre de pouvoir d'achat face à l'inflation sur le long terme.")
+
+    with st.expander("PEA (Plan d'Épargne en Actions)", icon=":material/trending_up:"):
+        st.markdown("""
+**Description** — Le PEA est une enveloppe dédiée à l'investissement en actions, avec un avantage fiscal qui se déclenche après 5 ans de détention. Il est réservé aux résidents fiscaux français, plafonné à 150 000€ de versements (225 000€ en cumulant avec un PEA-PME).
+
+**Composition** — Actions de sociétés ayant leur siège dans l'Union européenne ou l'Espace économique européen (UE + Norvège, Islande, Liechtenstein), détenues en direct. Pas d'obligations, pas d'actions de sociétés hors zone UE/EEE en direct. Le PEA peut aussi loger des ETF éligibles PEA, gérés par des sociétés domiciliées dans l'UE/EEE : certains répliquent directement des indices européens, d'autres répliquent des indices mondiaux (type MSCI World, S&P 500) via un mécanisme de réplication indirecte, tout en respectant un quota minimal d'actions européennes détenues dans le fonds.
+""")
+        st.markdown("""
+        **Avantages**
+        - Fiscalité très avantageuse après 5 ans (18,6% au lieu de 31,4%)
+        - Accès à un large choix d'ETF et d'actions
+        - Plafond élevé : 150 000€ de versements
+
+        **Inconvénients**
+        - Retrait avant 5 ans = perte de l'avantage fiscal (souvent clôture du plan)
+        - Capital non garanti, soumis aux fluctuations des marchés
+        - Réservé aux résidents fiscaux français
+        """)
+        st.markdown("**Dans la pratique** — la diversification via des ETF monde larges (type MSCI World) est une approche couramment recommandée par les acteurs de l'éducation financière pour réduire le risque spécifique lié à une seule action ou un seul secteur, plutôt que de miser sur des titres isolés.")
+
+    with st.expander("Assurance-vie", icon=":material/shield:"):
+        st.markdown("""
+**Description** — L'assurance-vie est une enveloppe d'épargne polyvalente, sans plafond de versement, dont la fiscalité s'allège progressivement avec le temps (paliers à 4 et 8 ans). Ce n'est pas un placement bloqué : des retraits partiels restent possibles à tout moment.
+
+**Composition** — Fonds euros : capital garanti par l'assureur, investi majoritairement en obligations d'État et d'entreprises, rendement généralement modeste. Unités de compte (UC) : supports non garantis en capital, qui peuvent inclure des OPCVM/fonds, des ETF, des SCPI (immobilier), des actions... Un contrat multisupport permet de répartir librement l'épargne entre fonds euros et UC.
+""")
+        st.markdown("""
+        **Avantages**
+        - Fiscalité dégressive avec le temps, abattement après 8 ans
+        - Transmission facilitée en cas de décès (hors succession classique)
+        - Flexible : retraits partiels possibles à tout moment
+
+        **Inconvénients**
+        - Fiscalité moins avantageuse que le PEA si retrait avant 8 ans
+        - Frais parfois élevés selon le contrat (gestion, entrée)
+        - Rendement variable selon le support (fonds euros vs unités de compte)
+        """)
+        st.markdown("**Dans la pratique** — le fonds euros sécurise le capital mais son rendement suit la tendance des taux d'intérêt (souvent proche de celui des livrets ces dernières années), tandis que les unités de compte (actions, ETF, immobilier...) visent un rendement plus élevé en échange d'un risque de perte en capital. La répartition entre les deux dépend de l'horizon et de la tolérance au risque de chacun.")
+
+    with st.expander("PER (Plan d'Épargne Retraite)", icon=":material/elderly:"):
+        st.markdown("""
+**Description** — Le PER est une enveloppe dédiée à la préparation de la retraite : les versements volontaires sont déductibles du revenu imposable, en échange d'un blocage de l'épargne jusqu'au départ en retraite. Six cas permettent un déblocage anticipé : achat de la résidence principale, invalidité, décès du conjoint ou partenaire de Pacs, fin de droits au chômage, surendettement, ou liquidation judiciaire pour un indépendant.
+
+**Composition** — Structure proche de l'assurance-vie : fonds euros (capital garanti, majoritairement obligataire) et unités de compte (actions, ETF, SCPI...), souvent avec une gestion pilotée qui sécurise progressivement le capital à mesure que la retraite approche.
+""")
+        st.markdown("""
+        **Avantages**
+        - Versements volontaires déductibles du revenu imposable (jusqu'à 10% des revenus professionnels, plafonné à 37 680€ en 2026 pour un salarié)
+        - Sortie flexible à la retraite : capital, rente viagère, ou un mélange des deux
+        - Cas de déblocage anticipé, dont l'achat de la résidence principale
+
+        **Inconvénients**
+        - Épargne bloquée jusqu'à la retraite, sauf cas prévus par la loi
+        - Avantage fiscal réel seulement si la tranche marginale d'imposition n'est pas nulle
+        - Versements déduits à l'entrée réintégrés au revenu imposable à la sortie (fiscalité différée, pas supprimée)
+        - Frais parfois élevés selon le contrat
+        """)
+        st.markdown("**Dans la pratique** — le PER est surtout pertinent pour les tranches d'imposition élevées, qui tirent un vrai gain d'impôt de la déduction à l'entrée ; sans imposition significative aujourd'hui, l'intérêt fiscal disparaît alors que la contrainte de blocage, elle, demeure.")
+
+    st.caption("Sources : AMF, service-public.fr, economie.gouv.fr, lafinancepourtous.com. Chiffres à jour au moment de la rédaction, susceptibles d'évoluer. Pas un conseil personnalisé.")
+
+
 page_information_profil = st.Page(vue_information_profil, title="Information et profil", icon=":material/person:", default=True)
 page_cours = st.Page(vue_cours, title="Cours", icon=":material/school:")
 page_comment_debuter = st.Page(vue_comment_debuter, title="Comment débuter", icon=":material/explore:")
+page_enveloppes_fiscales = st.Page(vue_enveloppes_fiscales, title="Enveloppes fiscales", icon=":material/folder_open:")
 page_parcours_intro = st.Page(vue_parcours_intro, title="Parcours d'intro", visibility="hidden")
 
-pages = st.navigation([page_information_profil, page_cours, page_comment_debuter, page_parcours_intro])
+pages = st.navigation([page_information_profil, page_cours, page_comment_debuter, page_enveloppes_fiscales, page_parcours_intro])
 
 if st.session_state.pop("aller_direct_au_cours", False):
     st.switch_page(page_parcours_intro)
